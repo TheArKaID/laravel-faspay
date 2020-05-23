@@ -1,6 +1,10 @@
 # laravel-faspay
 Unofficial Laravel package for [Faspay Payment Gateway](https://faspay.co.id).
+
 This Package is a conversion from [Faspay Api. PHP](https://github.com/hilmanshini/FaspayApI_PHP)
+
+- [x] Faspay Business Debit
+- [ ] Faspay Business Credit
 
 ## Features
 - Getting Payment Channel
