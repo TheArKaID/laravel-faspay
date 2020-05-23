@@ -1,7 +1,7 @@
 {
     "name": "thearkaid/laravel-faspay",
     "description": "Unofficial Laravel package for Faspay Payment Gateway",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
