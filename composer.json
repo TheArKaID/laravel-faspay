@@ -1,0 +1,28 @@
+{
+    "name": "thearkaid/laravel-faspay",
+    "description": "Unofficial Laravel package for Faspay Payment Gateway",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arifia Kasastra. R",
+            "email": "arka.progammer@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TheArKaID\\LaravelFaspay\\Providers\\LaravelFaspayServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "TheArKaID\\LaravelFaspay\\": "src/"
+        }
+    },
+    "require": {
+        "karriere/json-decoder": "dev-master",
+        "sabre/xml": "^2.1"
+    }
+}
