@@ -65,33 +65,32 @@ class LaravelFaspay
         $item = Array();
         foreach ($orders as $order) {
             $dataorder = new FaspayPayment(
-                $order->getProduct(), // Product
-                $order->getQty(), // Quantity
-                $order->getAmount(), // Amount
-                $order->getPayment_plan(), // Payment Plan
-                $order->getMerchant_id(), // Merchant ()ID
-                $order->getTenor() // Tenor
+                $order["product"], // Product
+                $order["qty"], // Quantity
+                $order["amount"], // Amount
+                $order["paymentplan"], // Payment Plan
+                $order["merchantid"], // Merchant ID
+                $order["tenor"] // Tenor
             );
             array_push($item, $dataorder); // Push
         }
-        $expired = $billData->getBill_expired();
         
         // Create Billing Data
         $BillData = FaspayPaymentRequestBillData::managed(
-            $billData->getBill_no(), // Billing Number
-            $billData->getBill_desc(), // Billing Description
-            $expired, // Expired Day Interval
-            $billData->getBill_total(), // Bill Total
+            $billData["billno"], // Billing Number
+            $billData["billdesc"], // Billing Description
+            $billData["billexp"], // Expired Day Interval
+            $billData["billtotal"], // Bill Total
             $item, // Item
-            $billData->getPay_type() // Pay Type
+            $billData["paytype"] // Pay Type
         );
 
         $UserData = new FaspayPaymentRequestUserData(
-            $userData->getMsisdn(), // MSIDN
-            $userData->getEmail(), // Email
-            $userData->getTerminal(), // Terminal
-            $userData->getCustNo(), // Customer No
-            $userData->getCustName() // Customer Name
+            $userData["phone"], // Phone Number
+            $userData["email"], // Email
+            $userData["terminal"], // Terminal
+            $userData["custno"], // Customer No
+            $userData["custname"] // Customer Name
         );
 
         // Create Shipping Data object

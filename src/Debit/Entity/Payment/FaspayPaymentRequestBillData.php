@@ -43,7 +43,7 @@ class FaspayPaymentRequestBillData {
         $instance->setBill_date($Date1);
         
         $instance->setPay_type($payType);
-        $instance->setBill_expired($expired_day_interval);
+        $instance->setBill_expired($next);
         $instance->setBill_no($billNo);
         $instance->setBill_desc($billDesc);
         $instance->setBill_total($billTotal);
