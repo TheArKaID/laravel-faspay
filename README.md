@@ -1,7 +1,7 @@
 # laravel-faspay
 Unofficial Laravel package for [Faspay Payment Gateway](https://faspay.co.id).
 
-This Package is a conversion from [Faspay Api. PHP](https://github.com/hilmanshini/FaspayApI_PHP)
+This Package is a conversion from [Faspay Api. PHP](https://github.com/faspay-team/Sdk-PHP-Faspay).
 
 - [x] Faspay Business Debit
 - [ ] Faspay Business Credit
@@ -58,49 +58,37 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
 3. Creating Payment
 
 ```php
-  // Use the following classes
-  use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPayment;
-  use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPaymentRequestBillData;
-  use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPaymentRequestUserData;
-  use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPaymentRequestWrapper;
-
   // Define your payment channel,
   $paymentChannel['pg_code'] = "802";
   $paymentChannel['pg_name'] = "Mandiri Virtual Account";
-  
+    
   // Create an array for ordered Item
   $item = Array();
-  $order = new FaspayPayment(
-    "Item #1", // Product name
-    1, // Quantity
-    100000, // Amount
-    1, // Payment Plan
-    $faspayer->getConfig()->getUser()->getMerchantId(), // Merchant ID
-    00 // Tenor
-   );
-  array_push($item, $order); // Push the item as order
+  $order["product"] = "Item #1"; // Product Name
+  $order["qty"] = 1; // QTY
+  $order["amount"] = 100000; // Price
+  $order["paymentplan"] = 1; // Payment Plan
+  $order["merchantid"] = $faspayer->getConfig()->getUser()->getMerchantId(); // Merchant ID
+  $order["tenor"] = 00; // Tenor. 
+  array_push($item, $order); // Push order,
+  // Loop or push again for more than 1 items.
 
   // Create Bill Data
-  $billData = FaspayPaymentRequestBillData::managed(
-    "123456789", // Billing Number
-    "Pembayaran X", // Billing Description
-    2, // Expired Day Interval
-    "100000", // Bill Total, don't add '.' or ','m only number
-    $item, // Item
-    FaspayPaymentRequestBillData::PAY_TYPE_MIXED // Pay Type
-  );
+  $billData["billno"] = "1232123"; // Bill Number
+  $billData["billdesc"] = "Pembayaran RHI"; // Billing Description
+  $billData["billexp"] = 2; // Expired Day Interval (in total days)
+  $billData["billtotal"] = "10000"; // Bill Total, don't add '.' or ',', number only
+  $billData["paytype"] = 3 // Pay Type
 
     // Create User Data
-  $userData = new FaspayPaymentRequestUserData(
-    "087123123123", // Phone Number
-    "arka.progammer@gmail.com", // Email
-    FaspayPaymentRequestWrapper::TERMINAL_MOBILE_APP_ANDROID, // Terminal
-    "1234", // Customer No
-    "Arifia" // Customer Name
-  );
+  $userData["phone"] = "087123123123"; // Phone Number
+  $userData["email"] = "arka.progammer@gmail.com"; // Email
+  $userData["terminal"] = 21; // Terminal
+  $userData["custno"] = "12345"; // Customer No
+  $userData["custname"] = "thearka"; // Customer Name
 
   // Proccess the request and return the result.
-  return $faspayer->createPayment($item, $paymentChannel);
+  return $faspayer->createPayment($item, $paymentChannel, $billData, $userData);
 ```
 
 4. Checking Payment Status
@@ -108,6 +96,7 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
 ```php
   // Proccess the request and return the result.
   return $faspayer->checkPaymentStatus(
+    $reqdesc, // Request Description
     $trx_id, // Transaction ID
     $billno // Billing Number
    );
@@ -120,7 +109,7 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
   return $faspayer->cancelPayment(
     $trx_id, // Transaction ID
     $billno, // Billing Number
-    $paymentcancel
+    $paymentcancel // Description for Cancellation
    );
 ```
 
