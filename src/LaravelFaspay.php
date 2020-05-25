@@ -108,12 +108,12 @@ class LaravelFaspay
         return json_encode($service->createBilling($requestPaymentWrapper));
     }
 
-    public function checkPaymentStatus($trx_id, $billno)
+    public function checkPaymentStatus($trx_id, $billno, $reqdesc)
     {
         $service = new FaspayServiceImpl($this->getConfig());
 
         echo json_encode($service->inqueryPaymentStatus(new FaspayPaymentStatusRequestWrapper(
-            "Status Pembayaran", // Keterangan Request
+            $reqdesc, // Keterangan Request
             $trx_id, // Transaction ID
             $billno, // Nomor Orderan
             $this->getConfig()
