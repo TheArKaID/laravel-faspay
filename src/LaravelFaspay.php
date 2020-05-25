@@ -37,13 +37,13 @@ class LaravelFaspay
     {
         $service = new FaspayServiceImpl($this->getConfig());
 
-        // Get Payment Channel
+        // Ambil Payment Channel
         $pcresp = $service->inqueryPaymentChannel()->getPayment_channel();
-        // This is for Payment Channel
+        // Ini untuk menampung Payment Channel nya
         $allpaymentchannel = array();
-        // Loop here
+        // Ulang"
         foreach ($pcresp as $pc) {
-            // Insert to array
+            // Masukkan ke array
             $allpaymentchannel[] = array(
                 'pg_code' => $pc->getPg_code(), 
                 'pg_name' => $pc->getPg_name()
@@ -56,19 +56,19 @@ class LaravelFaspay
     {
         $service = new FaspayServiceImpl($this->getConfig());
         
-        // Create Payment Channel object
+        // Buta Payment Channel
         $PC = new FaspayPaymentChannel();
         $PC->setPg_code($paymentChannel['pg_code']);
         $PC->setPg_name($paymentChannel['pg_name']);
 
-        // Create Payment with Order
+        // Buat Pembayaran
         $item = Array();
         foreach ($orders as $order) {
             $dataorder = new FaspayPayment(
                 $order["product"], // Product
                 $order["qty"], // Quantity
                 $order["amount"], // Amount
-                $order["paymentplan"], // Payment Plan
+                $order["paymentplan"], // Rencana Pembayaran
                 $order["merchantid"], // Merchant ID
                 $order["tenor"] // Tenor
             );
@@ -79,24 +79,24 @@ class LaravelFaspay
         $BillData = FaspayPaymentRequestBillData::managed(
             $billData["billno"], // Billing Number
             $billData["billdesc"], // Billing Description
-            $billData["billexp"], // Expired Day Interval
+            $billData["billexp"], // Waktu expired (dalam jumlah hari)
             $billData["billtotal"], // Bill Total
             $item, // Item
-            $billData["paytype"] // Pay Type
+            $billData["paytype"] // Tipe Pembayaran
         );
 
         $UserData = new FaspayPaymentRequestUserData(
             $userData["phone"], // Phone Number
             $userData["email"], // Email
-            $userData["terminal"], // Terminal
-            $userData["custno"], // Customer No
-            $userData["custname"] // Customer Name
+            $userData["terminal"], // Terminal (digunakan lewat platform apa)
+            $userData["custno"], // Customer Number
+            $userData["custname"] // Customer Nama
         );
 
-        // Create Shipping Data object
+        // Buat Shipping Data object
         $shippingBillData = new FaspayPaymentRequestShippingData();
 
-        // Wrap and Create Billing
+        // Buat Billing
         $requestPaymentWrapper = new FaspayPaymentRequestWrapper(
             $this->getConfig(), 
             $BillData, // FaspayPaymentRequestBillData
@@ -113,7 +113,7 @@ class LaravelFaspay
         $service = new FaspayServiceImpl($this->getConfig());
 
         echo json_encode($service->inqueryPaymentStatus(new FaspayPaymentStatusRequestWrapper(
-            "Status Pembayaran", // Request Description
+            "Status Pembayaran", // Keterangan Request
             $trx_id, // Transaction ID
             $billno, // Nomor Orderan
             $this->getConfig()
