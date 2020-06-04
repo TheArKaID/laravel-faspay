@@ -67,7 +67,7 @@ class LaravelFaspay
             $dataorder = new FaspayPayment(
                 $order["product"], // Product
                 $order["qty"], // Quantity
-                $order["amount"], // Amount
+                $order["amount"]."00", // Amount
                 $order["paymentplan"], // Rencana Pembayaran
                 $order["merchantid"], // Merchant ID
                 $order["tenor"] // Tenor
