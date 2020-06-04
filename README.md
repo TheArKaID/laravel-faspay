@@ -18,10 +18,6 @@ You can install the package via composer:
 > composer require thearkaid/laravel-faspay
 
 
-Publish the vendor then choose TheArKaID\LaravelFaspay
-> php artisan vendor:publish
-
-
 ## How to Use
 0. Update faspay.php Configuration in your config directory,
 
@@ -33,7 +29,7 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
       $this->setUserId("bot32254");
       $this->setPassword("p@ssw0rd");
       $this->setRedirectUrl("https://faspay.co.id");
-      $this->setDev(true); // true untuk Dev Mode, false untuk Production Mode
+      $this->setDev(true); // true for Dev Mode, false for Production Mode
     }
   }
 ```
@@ -66,10 +62,10 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
   $item = Array();
   $order["product"] = "Item #1"; // Product Name
   $order["qty"] = 1; // QTY
-  $order["amount"] = 100000; // Price
-  $order["paymentplan"] = 1; // Payment Plan
+  $order["amount"] = 100000; // Price. Just the real price, without any '.'(dot) or ',' (comma).
+  $order["paymentplan"] = 1; // Payment Plan. See References below.
   $order["merchantid"] = $faspayer->getConfig()->getUser()->getMerchantId(); // Merchant ID
-  $order["tenor"] = 00; // Tenor. 
+  $order["tenor"] = 00; // Tenor. See References below.
   array_push($item, $order); // Push order,
   // Loop or push again for more than 1 items.
 
@@ -78,7 +74,7 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
   $billData["billdesc"] = "Pembayaran RHI"; // Billing Description
   $billData["billexp"] = 2; // Expired Day Interval (in total days)
   $billData["billtotal"] = "10000"; // Bill Total, don't add '.' or ',', number only
-  $billData["paytype"] = 3 // Pay Type
+  $billData["paytype"] = 3 // Pay Type. See References below.
 
     // Create User Data
   $userData["phone"] = "087123123123"; // Phone Number
@@ -117,9 +113,14 @@ Publish the vendor then choose TheArKaID\LaravelFaspay
 
 When users accept or cancel payment, notification of payment status sent to your server. 
 
+When creating this one, tell to the Faspay Team which one would you use, JSON or XML, so they can send that data, and you can choose to use notifier() for JSON or notifierXML() for XML data.
+
 ```php
-  // Get the notification
+  // Get the notification for JSON
   return $faspayer->notifier();
+
+  // Get the notification fo XML
+  return $faspayer->notifierXML();
 ```
 
 ### References
