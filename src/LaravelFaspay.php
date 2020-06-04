@@ -134,7 +134,12 @@ class LaravelFaspay
 
     public function notifier()
     {
+        return json_decode(file_get_contents('php://input')); // Return the JSON Data from Faspay
+    }
+
+    public function notifierXML()
+    {
         $notif = new NotifyHandler();
-        return $notif->handle();
+        return $notif->handle(); // Return the XML Data
     }
 }
