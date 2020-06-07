@@ -73,7 +73,7 @@ You can install the package via composer:
   $billData["billno"] = "1232123"; // Bill Number
   $billData["billdesc"] = "Pembayaran RHI"; // Billing Description
   $billData["billexp"] = 2; // Expired Day Interval (in total days)
-  $billData["billtotal"] = "10000"; // Bill Total, don't add '.' or ',', number only
+  $billData["billtotal"] = "10000"; // Bill Total, Just the real bill, without any '.'(dot) or ',' (comma).
   $billData["paytype"] = 3 // Pay Type. See References below.
 
     // Create User Data
