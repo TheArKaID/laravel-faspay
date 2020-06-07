@@ -80,7 +80,7 @@ class LaravelFaspay
             $billData["billno"], // Billing Number
             $billData["billdesc"], // Billing Description
             $billData["billexp"], // Waktu expired (dalam jumlah hari)
-            $billData["billtotal"], // Bill Total
+            $billData["billtotal"]."00", // Bill Total
             $item, // Item
             $billData["paytype"] // Tipe Pembayaran
         );
