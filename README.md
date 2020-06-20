@@ -3,6 +3,11 @@ Unofficial Laravel package for [Faspay Payment Gateway](https://faspay.co.id).
 
 This Package is a conversion from [Faspay Api. PHP](https://github.com/faspay-team/Sdk-PHP-Faspay).
 
+
+Tested on: 
+[![Laravel 5.5](https://img.shields.io/badge/Laravel-5.5-orange.svg)](https://laravel.com/docs/5.5) [![Laravel 7.x](https://img.shields.io/badge/Laravel-7.x-red.svg)](https://laravel.com)
+[![Latest Stable Version](https://poser.pugx.org/TheArKaID/laravel-faspay/v/stable)](https://packagist.org/packages/TheArKaID/laravel-faspay) [![Total Downloads](https://poser.pugx.org/TheArKaID/laravel-faspay/downloads.png)](https://packagist.org/packages/TheArKaID/laravel-faspay) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/TheArKaID/laravel-faspay)
+
 - [x] Faspay Business Debit
 - [ ] Faspay Business Credit
 
@@ -15,23 +20,36 @@ This Package is a conversion from [Faspay Api. PHP](https://github.com/faspay-te
 
 ## Installation
 You can install the package via composer:
-> composer require thearkaid/laravel-faspay
+```
+composer require thearkaid/laravel-faspay
+```
 
 
 ## How to Use
 0. Update faspay.php Configuration in your config directory,
 
 ```php
-  class faspay extends FaspayUser{
-    function __construct() {
-      $this->setMerchantName("SINTESA");
-      $this->setMerchantId("32254");
-      $this->setUserId("bot32254");
-      $this->setPassword("p@ssw0rd");
-      $this->setRedirectUrl("https://faspay.co.id");
-      $this->setDev(true); // true for Dev Mode, false for Production Mode
-    }
-  }
+  /**
+   * Set true saat dalam Mode Development
+   * Set false saat ke Mode Production
+   */
+  'isdev' => true,
+  // Kredensial saat dalam Mode Development
+  'devcred' => [
+      'merchantname' => env('FP_DEV_MERCHANT_NAME', 'OR JUST SET HERE'),
+      'merchantid' => env('FP_DEV_MERCHANT_ID', 'OR JUST SET HERE'),
+      'userid' => env('FP_DEV_USER_ID', 'OR JUST SET HERE'),
+      'password' => env('FP_DEV_PASSWORD', 'OR JUST SET HERE'),
+      'redirecturl' => env('FP_DEV_REDIRECT_URL', 'OR JUST SET HEREE')
+  ],
+  // Kredensial saat dalam Mode Production
+  'prodcred' => [
+      'merchantname' => env('FP_PROD_MERCHANT_NAME', 'OR JUST SET HERE'),
+      'merchantid' => env('FP_PROD_MERCHANT_ID', 'OR JUST SET HERE'),
+      'userid' => env('FP_PROD_USER_ID', 'OR JUST SET HERE'),
+      'password' => env('FP_PROD_PASSWORD', 'OR JUST SET HERE'),
+      'redirecturl' => env('FP_PROD_REDIRECT_URL', 'OR JUST SET HEREE')
+  ]
 ```
 
 1. Alway Use and Create LaravelFaspay Class
@@ -73,7 +91,7 @@ You can install the package via composer:
   $billData["billno"] = "1232123"; // Bill Number
   $billData["billdesc"] = "Pembayaran RHI"; // Billing Description
   $billData["billexp"] = 2; // Expired Day Interval (in total days)
-  $billData["billtotal"] = "10000"; // Bill Total, Just the real bill, without any '.'(dot) or ',' (comma).
+  $billData["billtotal"] = 10000; // Bill Total, Just the real bill, without any '.'(dot) or ',' (comma).
   $billData["paytype"] = 3 // Pay Type. See References below.
 
     // Create User Data
