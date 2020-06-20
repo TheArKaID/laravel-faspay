@@ -3,16 +3,11 @@
 namespace TheArKaID\LaravelFaspay\Debit;
 
 class FaspayUser {
-    private $dev;
     private $merchantName;
     private $merchantId;
     private $userId;
     private $password;
     private $redirectUrl;
-
-    function getDev() {
-        return $this->dev;
-    }
 
     function getMerchantName() {
         return $this->merchantName;
@@ -32,10 +27,6 @@ class FaspayUser {
 
     function getRedirectUrl() {
         return $this->redirectUrl;
-    }
-
-    function setDev($dev) {
-        $this->dev = $dev;
     }
 
     function setMerchantName($merchantName) {

@@ -3,7 +3,7 @@
 namespace TheArKaID\LaravelFaspay;
 
 use \stdClass;
-use TheArKaID\LaravelFaspay\faspay;
+use TheArKaID\LaravelFaspay\User;
 use TheArKaID\LaravelFaspay\Debit\ConfigsDev;
 use TheArKaID\LaravelFaspay\Debit\ConfigsProd;
 use TheArKaID\LaravelFaspay\Debit\Service\FaspayServiceImpl;
@@ -24,11 +24,10 @@ class LaravelFaspay
 
     public function getConfig()
     {
-        $user = new faspay();
-        if($user->getDev()){
-            $this->config = new ConfigsDev($user);
+        if(config('faspay.isdev')){
+            $this->config = new ConfigsDev(new User(config('faspay.isdev')));
         } else{
-            $this->config = new ConfigsProd($user);
+            $this->config = new ConfigsProd(new User(config('faspay.isdev')));
         } 
         return $this->config;
     }
