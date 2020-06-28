@@ -10,7 +10,6 @@ use TheArKaID\LaravelFaspay\Debit\Service\FaspayServiceImpl;
 use TheArKaID\LaravelFaspay\Debit\Entity\FaspayPaymentChannel;
 use TheArKaID\LaravelFaspay\Debit\Entity\FaspayPaymentChannelResponse;
 use TheArKaID\LaravelFaspay\Debit\Entity\FaspayPaymentStatusRequestWrapper;
-use TheArKaID\LaravelFaspay\Debit\Entity\Notify\NotifyHandler;
 use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPayment;
 use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPaymentRequestBillData;
 use TheArKaID\LaravelFaspay\Debit\Entity\Payment\FaspayPaymentRequestUserData;
@@ -133,12 +132,43 @@ class LaravelFaspay
 
     public function notifier()
     {
-        return json_decode(file_get_contents('php://input')); // Return the JSON Data from Faspay
-    }
+        // Ambil data yang Faspay kirimkan
+        $raw = json_decode(file_get_contents('php://input'));
+        
+        // Cek signature nya
+        if(isset($raw->signature)){
+            
+            $thatsme = $raw->signature;
+            
+            // Signature yang dikirimkan berformat sha1(md5(UserId+Password+BillNo+StatusCode))
+            $itsme = sha1(md5(
+                $this->getConfig()->getUser()->getUserId().
+                $this->getConfig()->getUser()->getPassword().
+                $raw->bill_no.
+                2
+            ));
 
-    public function notifierXML()
-    {
-        $notif = new NotifyHandler();
-        return $notif->handle(); // Return the XML Data
+            $response = array();
+            $response['response'] = "Payment Notification";
+            $response['response_date'] = date('Y-m-d H:m:s');
+
+            // Verifikasi Signature nya
+            if($itsme==$thatsme){
+                $response['trx_id'] = $raw->trx_id;
+                $response['merchant_id'] = $raw->merchant_id;
+                $response['merchant'] = $raw->merchant;
+                $repsonse['bill_no'] = $raw->bill_no;
+                $response['response_code'] = "00";
+                $response['response_desc'] = "Sukses";
+                $response = json_encode($response, JSON_PRETTY_PRINT);
+            } else{
+                $response['response_code'] = "01";
+                $response['response_desc'] = "Gagal";
+                $response = json_encode($response, JSON_PRETTY_PRINT);
+            }
+            return ($response);
+        } else{
+            return redirect('/');
+        }
     }
 }
