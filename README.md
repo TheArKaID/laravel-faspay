@@ -24,7 +24,7 @@ You can install the package via composer:
 composer require thearkaid/laravel-faspay
 ```
 
-Publish faspay.php configiration
+Publish faspay.php configuration
 ```
 php artisan vendor:publish --provider='TheArKaID\LaravelFaspay\Providers\LaravelFaspayServiceProvider'
 ```
