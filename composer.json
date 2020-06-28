@@ -24,10 +24,5 @@
     "require": {
         "karriere/json-decoder": "dev-master",
         "sabre/xml": "^2.1"
-    },
-    "scripts": {
-        "post-package-install": [
-            "@php artisan vendor:publish --provider='TheArKaID\\LaravelFaspay\\Providers\\LaravelFaspayServiceProvider'"
-        ]
     }
 }
