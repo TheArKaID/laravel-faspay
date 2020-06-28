@@ -17,6 +17,7 @@ Tested on:
 - Checking Payment Status
 - Cancelling Payment
 - Notification
+- Callback
 
 ## Installation
 You can install the package via composer:
@@ -140,12 +141,12 @@ When users accept or cancel payment, notification of payment status sent to your
   // Get the notification.
   return $faspayer->notifier();
 
-  // The Data returned. Take the trx_id and response_code for updating your data status. 
+  // The Data returned. Take the data for updating your data status. 
   // Success.
   {
     "response": "Payment Notification",
     "response_date": "2020-06-28 17:06:26",
-    "trx_id": "1234567890", // Transaction ID/Bill Number
+    "trx_id": "1234567890", // Transaction ID
     "merchant_id": "12345", // Merchant ID
     "merchant": "TheArKa", // Merchant Name
     "response_code": "00",
@@ -156,12 +157,33 @@ When users accept or cancel payment, notification of payment status sent to your
   {
     "response": "Payment Notification",
     "response_date": "2020-06-28 17:06:15",
-    "trx_id": "1234567890", // Transaction ID/Bill Number
+    "trx_id": "1234567890", // Transaction ID
     "merchant_id": "12345", // Merchant ID
     "merchant": "TheArKa", // Merchant Name
     "response_code": "01",
     "response_desc": "Gagal"
   }
+```
+
+7. Callback
+
+Callback will be called when the user transaction has finished paid and get a notification that the transaction has been completed.
+```php
+  // Get the callback data
+  return $faspayer->callbacker();
+  // The Data returned. Take the data for updating your data status. 
+  {
+    "response": "Callback",
+    "response_date": "2020-06-28 17:06:26",
+    "trx_id": "1234567890", // Transaction ID
+    "bill_no": "1234567890", // Bill Number
+    "merchant_id": "12345", // Merchant ID
+    "merchant": "TheArKa", // Merchant Name
+    "bill_ref": "1234567890", // Bill Reference
+    "response_code": "00",
+    "response_desc": "Sukses"
+  }
+
 ```
 
 ### References
