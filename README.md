@@ -45,7 +45,7 @@ php artisan vendor:publish --provider='TheArKaID\LaravelFaspay\Providers\Laravel
       'merchantid' => env('FP_DEV_MERCHANT_ID', 'OR JUST SET HERE'),
       'userid' => env('FP_DEV_USER_ID', 'OR JUST SET HERE'),
       'password' => env('FP_DEV_PASSWORD', 'OR JUST SET HERE'),
-      'redirecturl' => env('FP_DEV_REDIRECT_URL', 'OR JUST SET HEREE')
+      'redirecturl' => env('FP_DEV_REDIRECT_URL', 'OR JUST SET HERE')
   ],
   // Kredensial saat dalam Mode Production
   'prodcred' => [
@@ -53,7 +53,7 @@ php artisan vendor:publish --provider='TheArKaID\LaravelFaspay\Providers\Laravel
       'merchantid' => env('FP_PROD_MERCHANT_ID', 'OR JUST SET HERE'),
       'userid' => env('FP_PROD_USER_ID', 'OR JUST SET HERE'),
       'password' => env('FP_PROD_PASSWORD', 'OR JUST SET HERE'),
-      'redirecturl' => env('FP_PROD_REDIRECT_URL', 'OR JUST SET HEREE')
+      'redirecturl' => env('FP_PROD_REDIRECT_URL', 'OR JUST SET HERE')
   ]
 ```
 
@@ -134,16 +134,34 @@ php artisan vendor:publish --provider='TheArKaID\LaravelFaspay\Providers\Laravel
 
 6. Notification
 
-When users accept or cancel payment, notification of payment status sent to your server. 
-
-When creating this one, tell to the Faspay Team which one would you use, JSON or XML, so they can send that data, and you can choose to use notifier() for JSON or notifierXML() for XML data.
+When users accept or cancel payment, notification of payment status sent to your server. Don't forget to return this data to the screen, as response to Faspay that their request accepted in your server
 
 ```php
-  // Get the notification for JSON
+  // Get the notification.
   return $faspayer->notifier();
 
-  // Get the notification fo XML
-  return $faspayer->notifierXML();
+  // The Data returned. Take the trx_id and response_code for updating your data status. 
+  // Success.
+  {
+    "response": "Payment Notification",
+    "response_date": "2020-06-28 17:06:26",
+    "trx_id": "1234567890", // Transaction ID/Bill Number
+    "merchant_id": "12345", // Merchant ID
+    "merchant": "TheArKa", // Merchant Name
+    "response_code": "00",
+    "response_desc": "Sukses"
+  }
+
+  // Failed
+  {
+    "response": "Payment Notification",
+    "response_date": "2020-06-28 17:06:15",
+    "trx_id": "1234567890", // Transaction ID/Bill Number
+    "merchant_id": "12345", // Merchant ID
+    "merchant": "TheArKa", // Merchant Name
+    "response_code": "01",
+    "response_desc": "Gagal"
+  }
 ```
 
 ### References
