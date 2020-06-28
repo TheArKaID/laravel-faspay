@@ -24,6 +24,11 @@ You can install the package via composer:
 composer require thearkaid/laravel-faspay
 ```
 
+Publish faspay.php configiration
+```
+php artisan vendor:publish --provider='TheArKaID\LaravelFaspay\Providers\LaravelFaspayServiceProvider'
+```
+
 
 ## How to Use
 0. Update faspay.php Configuration in your config directory,
