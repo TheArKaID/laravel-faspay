@@ -4,6 +4,7 @@ return [
     /**
      * ==========================================
      * Set Kredensial di file.env seperti berikut
+     *         Atau set langsung di file ini
      * ==========================================
      * 
      * Set true saat dalam Mode Development
@@ -18,7 +19,7 @@ return [
         'merchantid' => env('FP_DEV_MERCHANT_ID', 'OR JUST SET HERE'),
         'userid' => env('FP_DEV_USER_ID', 'OR JUST SET HERE'),
         'password' => env('FP_DEV_PASSWORD', 'OR JUST SET HERE'),
-        'redirecturl' => env('FP_DEV_REDIRECT_URL', 'OR JUST SET HEREE')
+        'redirecturl' => env('FP_DEV_REDIRECT_URL', 'OR JUST SET HERE')
     ],
     /**
      * Kredensial saat dalam Mode Production
@@ -28,7 +29,7 @@ return [
         'merchantid' => env('FP_PROD_MERCHANT_ID', 'OR JUST SET HERE'),
         'userid' => env('FP_PROD_USER_ID', 'OR JUST SET HERE'),
         'password' => env('FP_PROD_PASSWORD', 'OR JUST SET HERE'),
-        'redirecturl' => env('FP_PROD_REDIRECT_URL', 'OR JUST SET HEREE')
+        'redirecturl' => env('FP_PROD_REDIRECT_URL', 'OR JUST SET HERE')
     ]
 ];
 ?>
