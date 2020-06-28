@@ -171,4 +171,34 @@ class LaravelFaspay
             return redirect('/');
         }
     }
+
+    public function callbacker()
+    {
+        if(isset($_GET['signature'])){
+            $faspayer = new LaravelFaspay();
+            $thatsme = $_GET['signature'];
+
+            $itsmesuccess = sha1(md5(
+                $faspayer->getConfig()->getUser()->getUserId().
+                $faspayer->getConfig()->getUser()->getPassword().
+                $_GET['bill_no'].
+                2
+            ));
+
+            if($thatsme==$itsmesuccess){
+                $response = array();
+                $response['response'] = "Callback";
+                $response['response_date'] = date('Y-m-d H:m:s');
+                $response['trx_id'] = $_GET['trx_id'];
+                $repsonse['bill_no'] = $_GET['bill_no'];
+                $response['merchant_id'] = $_GET['merchant_id'];
+                $response['merchant'] = $_GET['merchant'];
+                $response['bill_ref'] = $_GET['bill_ref'];
+                $response['status'] = "Sukses";
+                return json_encode($response, JSON_PRETTY_PRINT);
+            }
+        } else {
+            return redirect('/');
+        }
+    }
 }
