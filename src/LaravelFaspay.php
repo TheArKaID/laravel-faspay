@@ -151,13 +151,13 @@ class LaravelFaspay
             $response = array();
             $response['response'] = "Payment Notification";
             $response['response_date'] = date('Y-m-d H:m:s');
+            $response['trx_id'] = $raw->trx_id;
+            $response['merchant_id'] = $raw->merchant_id;
+            $response['merchant'] = $raw->merchant;
+            $repsonse['bill_no'] = $raw->bill_no;
 
             // Verifikasi Signature nya
             if($itsme==$thatsme){
-                $response['trx_id'] = $raw->trx_id;
-                $response['merchant_id'] = $raw->merchant_id;
-                $response['merchant'] = $raw->merchant;
-                $repsonse['bill_no'] = $raw->bill_no;
                 $response['response_code'] = "00";
                 $response['response_desc'] = "Sukses";
                 $response = json_encode($response, JSON_PRETTY_PRINT);
