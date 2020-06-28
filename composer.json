@@ -22,7 +22,6 @@
         }
     },
     "require": {
-        "karriere/json-decoder": "dev-master",
-        "sabre/xml": "^2.1"
+        "karriere/json-decoder": "dev-master"
     }
 }
