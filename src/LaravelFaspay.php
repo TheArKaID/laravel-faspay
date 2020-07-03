@@ -24,9 +24,9 @@ class LaravelFaspay
     public function getConfig()
     {
         if(config('faspay.isdev')){
-            $this->config = new ConfigsDev(new User(config('faspay.isdev')));
+            $this->config = new ConfigsDev(new User(config('devcred')));
         } else{
-            $this->config = new ConfigsProd(new User(config('faspay.isdev')));
+            $this->config = new ConfigsProd(new User(config('prodcred')));
         } 
         return $this->config;
     }
