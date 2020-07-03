@@ -190,3 +190,6 @@ Callback will be called when the user transaction has finished paid and get a no
 There are informations in Faspay that could help you understanding terms in this package
 - [Faspay Business Documentation](https://faspay.co.id/docs/index-business.html#faspay-business)
 - [Faspay Simulator](https://dev.faspay.co.id/simulator)
+
+## Discontinued!
+This package has been discontinued, but it still works since the last commit, as long as how Faspay works hasn't changed. If you have a reason to continue this package, feel free to fork it or message me for any help.
